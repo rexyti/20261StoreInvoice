@@ -1,8 +1,11 @@
 # Actores identificados
 
-1. modulo de logística: ingresa tasa de efectividad DE LA DISTRIBUCION DEL PEDIDO del usuario que se usa para la accion financiera.
-2. recaudadores/mensajero: es el encargado de entregar el pedido y recaudar los pagos contraentrega.
-3. asesor comercial: Ingresa la forma de pago que concilió el recaudador con el comprador al sistema para anexarla a la factura
+1. Modulo de logística: ingresa tasa de efectividad DE LA DISTRIBUCION DEL PEDIDO del usuario que se usa para la accion financiera 
+y la generacion de facturas(Comprador & Transportista).
+2. Comprador: Persona que realiza el pedido y puede consultar sus facturas
+3. Asesor comercial: Registra el cliente e ingresa la forma de pago al sistema para anexarla a la factura
+4. Modulo de gestion de inventario: Envia el pedido para conocer el precio del pedido adicional al valor del envio
+5. Contador: Persona que cuenta las liquidaciones
 
 
 ```  
