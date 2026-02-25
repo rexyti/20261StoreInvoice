@@ -28,9 +28,9 @@ Yo como desarrollador necesito que la tasa de efectividad de la distribucion del
 **Acceptance Scenarios**:
 
 1. **Scenario**: Etapa logistica finalizada
-   - **Given**: El pedido tenga un estado final
-   - **When**: El transportista entregue o reporte un estado final definitivo o temporal
-   - **Then**: El asesor comercial entregue la tasa de efectividad de la distribucion del pedido y esta sea recibida y guardada en la base de datos
+   - **Given**: El pedido tenga uno de los siguientes estados: cancelado, entregado o daño parcial 
+   - **When**: El transportista entregue o reporte un estado que no sea "entregando"
+   - **Then**: El transportista entrega la tasa de efectividad de la distribucion del pedido y esta sea recibida y guardada en la base de datos
 
 
 2. **Scenario**: 
@@ -40,26 +40,24 @@ Yo como desarrollador necesito que la tasa de efectividad de la distribucion del
    
 ---
 
-### User Story 2 - Consulta de liquidaciones (Priority: P2)
+### User Story 2 -  (Priority: P2)
 
 Yo como contador quiero consultar liquidaciones de un usuario en especifico (se usa ID nacional). Para consultar informacion especifica con
 fines legales
 
-**Why this priority**: Transparencia de la informacion
+**Why this priority**: 
 
-**Independent Test**: Recibir las liquidaciones de un usuario especifico y concuerden con la BD 
+**Independent Test**: 
 
 **Acceptance Scenarios**:
 
-1. **Scenario**: Consulta exitos
-   - **Given**: Sesion iniciada en la pagina; Debe haber liquidaciones; 
-   - **When**: Cuando se requiera conocer informacion de un usuario especifico 
-   - **Then**: Recibe las liquidaciones del usuario especifico
+1. **Scenario**: 
+   - **Given**: 
+   - **When**: 
+   - **Then**: 
 
 
 ---
-
-[Add more user stories as needed, each with an assigned priority]
 
 ### Edge Cases
 
@@ -68,8 +66,15 @@ fines legales
   Fill them out with the right edge cases.
 -->
 
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+- ¿Qué pasa si el módulo 2 no envía la información?
+  → El sistema debe registrar error y no permitir liquidación.
+
+- ¿Qué pasa si la tasa es mayor a 100% o menor a 0%?
+  → El sistema debe rechazar el valor.
+
+- ¿Qué pasa si un pedido cambia de estado después de liquidado?
+  → Debe generarse ajuste o nota de corrección.
+
 
 ## Requirements *(mandatory)*
 
@@ -80,11 +85,15 @@ fines legales
 
 ### Functional Requirements
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+### Functional Requirements
+
+- **FR-001**: El sistema MUST recibir del módulo de Logística el estado final de cada pedido.
+- **FR-002**: El sistema MUST almacenar la tasa de efectividad asociada al pedido.
+- **FR-003**: El sistema MUST validar que la tasa esté entre 0% y 100%.
+- **FR-004**: El sistema MUST calcular automáticamente el monto a pagar al transportista.
+- **FR-005**: El sistema MUST permitir consultar liquidaciones por ID nacional.
+- **FR-006**: El sistema MUST generar historial de liquidaciones por transportista.
+- **FR-007**: El sistema MUST bloquear liquidaciones si faltan datos del módulo 2.
 
 *Example of marking unclear requirements:*
 
@@ -93,8 +102,21 @@ fines legales
 
 ### Key Entities *(include if feature involves data)*
 
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
+- **Transportista**:
+  Representa al responsable de la entrega.
+  Atributos clave: ID nacional, nombre, contrato, tarifa base.
+
+- **Pedido**:
+  Representa una orden despachada.
+  Atributos clave: ID pedido, estado final, valor del pedido, transportista asignado.
+
+- **Liquidación**:
+  Representa el balance de pago.
+  Atributos clave: ID liquidación, tasa de efectividad, monto calculado, fecha, transportista asociado.
+
+- **Tasa de Efectividad**:
+  Representa el porcentaje de cumplimiento del despacho.
+  Atributos clave: porcentaje, fecha de cálculo, pedido asociado.
 
 ## Success Criteria *(mandatory)*
 
