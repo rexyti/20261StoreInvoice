@@ -13,22 +13,22 @@ Yo como Sistema Financiero (Módulo 3) necesito calcular el monto a pagar al tra
 **Acceptance Scenarios:** 
 
 1. Scenario: Liquidación por Estado de Entrega Exitosa (100% de la tarifa)
-	- **Given:** El Módulo de Gestión de Inventario ha registrado un pedido con un precio, el Módulo de Logística ha registrado un estado de "Entregado Completo" para ese pedido.
+	- **Given:** El sistema obtiene exitosamente el precio del pedido consultando al Módulo de Gestión de Inventario, el Módulo de Logística ha registrado un estado de "Entregado Completo" para ese pedido.
 	- **When:** Cuando se desea generar la liquidación del transportista
 	- **Then:** El sistema calcula la tarifa según el pedido, aplica el 100% de pago por la tasa de efectividad, y genera una liquidación a pagar.
 
 2. Scenario: Liquidación con Rechazo Parcial (80% de la tarifa)
-	- **Given**: El Módulo de Gestión de Inventario ha registrado un pedido con un precio, el Módulo de Logística ha registrado un estado de "Rechazo parcial" para ese pedido.
+	- **Given**: El sistema obtiene exitosamente el precio del pedido consultando al Módulo de Gestión de Inventario, el Módulo de Logística ha registrado un estado de "Rechazo parcial" para ese pedido.
 	- **When:** Cuando se desea generar la liquidación del transportista
 	- **Then:** El sistema calcula la tarifa según el pedido, aplica el 80% de pago por la tasa de efectividad, y genera una liquidación a pagar.
 
 3. Scenario: Penalización por Faltante de Inventario (Pérdida)
-	- **Given**: El Módulo de Gestión de Inventario ha registrado un pedido con un precio, el Módulo de Logística ha registrado un estado de "Faltante de Inventario" para ese pedido.
+	- **Given**: El sistema obtiene exitosamente el precio del pedido consultando al Módulo de Gestión de Inventario, el Módulo de Logística ha registrado un estado de "Faltante de Inventario" para ese pedido.
 	- **When:** Cuando se desea generar la liquidación del transportista
 	- **Then:** El sistema calcula la tarifa según el pedido, aplica el -100% de pago por la tasa de efectividad, y genera una liquidación en contra del transportista.
 
 4. Scenario: Liquidación nula por Devolución (Error Empresa)
-	- **Given**: El Módulo de Gestión de Inventario ha registrado un pedido con un precio, el Módulo de Logística ha registrado un estado de "Devolución (Error Empresa)" para ese pedido.
+	- **Given**: El sistema obtiene exitosamente el precio del pedido consultando al Módulo de Gestión de Inventario, el Módulo de Logística ha registrado un estado de "Devolución (Error Empresa)" para ese pedido.
 	- **When:** Cuando se desea generar la liquidación del transportista
 	- **Then:** El sistema calcula la tarifa según el pedido, aplica el 0% de pago por la tasa de efectividad, y genera una liquidación, y registra el costo del flete como una pérdida operativa.
 
@@ -43,12 +43,12 @@ Yo como Sistema Financiero necesito validar que existan los datos de entrada req
 **Acceptance Scenarios:**
 
 1. **Scenario:** Intento de liquidación con datos incompletos
-	- **Given:** Tasa de efectividad registrada de un pedido, no se encuentra el precio del pedido registrado por el Módulo de Gestión de Inventario.
+	- **Given:** Tasa de efectividad registrada de un pedido, al consultar el endpoint del Módulo de Gestión de Inventario, este no retorna el precio del pedido.
 	- **When:** Cuando se desea generar la liquidación del transportista.
 	- **Then:** El sistema bloquea la operación, no genera la liquidación y muestra un error de "Falta precio del pedido".
 
 2. **Scenario:** Intento de liquidación con datos incompletos
-	- **Given:** Precio del pedido registrado, no se encuentra la Tasa de efectividad registrada por el Módulo de Logística.
+	- **Given:** El sistema obtiene exitosamente el precio del pedido consultando al Módulo de Gestión de Inventario, no se encuentra la Tasa de efectividad registrada por el Módulo de Logística.
 	- **When:** Cuando se desea generar la liquidación del transportista.
 	- **Then:** El sistema bloquea la operación, no genera la liquidación y muestra un error de "Falta tasa de efectividad del pedido".
 
