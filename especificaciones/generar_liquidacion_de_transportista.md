@@ -81,10 +81,11 @@ Yo como Sistema Financiero necesito validar que existan los datos de entrada req
 - **FR-004**: El sistema MUST aplicar a la tarifa base los porcentajes establecidos en la Matriz de Liquidación Logística (100% Entregado, 80% Rechazo Parcial, 0% Devolución empresa, -100% Faltante).
 - **FR-005**: El sistema MUST bloquear y cancelar la generación de la liquidación si el precio del pedido es nulo, cero, o si no hay un estado de entrega final reportado.
 
-### Key Entities *(include if feature involves data)*
+### Key Entities (include if feature involves data)
 
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
+- **Pedido**: [id_pedido, precio, id_cliente] (Requerido para consultar el valor base).
+- **Tasa_Efectividad**: [id_tasa, id_pedido, estado_final, id_transportista](Requerido para aplicar el multiplicador de la matriz).
+- **Liquidacion_Transportista**: [id_liquidacion, id_pedido, id_transportista, monto_calculado, fecha_liquidacion] (La entidad y registro final resultante).
   
 ## Success Criteria (mandatory)
 
