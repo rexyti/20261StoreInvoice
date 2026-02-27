@@ -8,6 +8,7 @@
 Yo como Sistema Financiero (Módulo 3) necesito calcular el monto a pagar al transportista tomando como base el 10% del precio total del pedido y aplicando la tasa de efectividad una vez que el Módulo de Logística reporte el estado final. Esto con el objetivo de asegurar el pago a los aliados de transporte.
 
 **Why this priority:**  Es una función importante del módulo financiera; sin esto, no se puede pagar a los transportistas.
+
 **Independent Test**: Añadir en la base de datos pedidos con diferentes precios y distintas tasas de efectividad, verificando que el cálculo final sea exacto según la regla de pago a los transportistas.
 
 **Acceptance Scenarios:** 
@@ -63,7 +64,7 @@ Yo como Sistema Financiero necesito validar que existan los datos de entrada req
 - ¿Qué pasa si la tasa de efectividad recibida desde el Módulo de Logística está fuera del rango 0-100%?
 - El sistema debe rechazar el precio, bloquear el cálculo y emitir una alerta de "Dato de efectividad inválido".
 
-- ¿Qué pasa si un pedido cambia de estado después de haber sido liquidado (ej. el cliente hace un reclamo posterior a la entrega)?
+- ¿Qué pasa si un pedido cambia de estado después de haber sido liquidado (ejemplo, el cliente hace un reclamo posterior a la entrega)?
 - El sistema no debe modificar ni sobrescribir la liquidación original, ya que esto rompería la auditoría contable, en su lugar, el sistema debe requerir o permitir la generación de un nuevo registro tipo "Nota de Ajuste" o "Corrección Financiera" vinculada al mismo ID de pedido.
 
 ## Requirements *(mandatory)*
