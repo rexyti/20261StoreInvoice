@@ -70,13 +70,15 @@ Yo como Sistema Financiero necesito validar que existan los datos de entrada req
 
 ### Functional Requirements
 
-- **FR-001**: System MUST 
-- **FR-002:** System MUST 
-- **FR-003:** System MUST
+- **FR-001**: El sistema MUST obtener el valor total del pedido ingresado por el Módulo de Gestión de Inventario.
+- **FR-002**: El sistema MUST obtener el estado de entrega "Tasa de efectividad de la distribución del pedido" del Módulo de Logística.
+- **FR-003**: El sistema MUST calcular la "tarifa base" del transportista extrayendo exactamente el 10% del valor total del pedido.
+- **FR-004**: El sistema MUST aplicar a la tarifa base los porcentajes establecidos en la Matriz de Liquidación Logística (100% Entregado, 80% Rechazo Parcial, 0% Devolución empresa, -100% Faltante).
+- **FR-005**: El sistema MUST bloquear y cancelar la generación de la liquidación si el valor comercial del pedido es nulo, cero, o si no hay un estado de entrega final reportado.
   
 ## Success Criteria (mandatory)
 
 ### Measurable Outcomes
 
-- **SC-001:** 
-- **SC-002:** 
+- **SC-001**: El 100% de las liquidaciones generadas reflejan exactamente el cálculo del 10% del valor del pedido ajustado por la matriz de efectividad.
+- **SC-002**: El sistema no genera ninguna liquidación (0%) con campos de pago vacíos o nulos por falta de datos de entrada.
