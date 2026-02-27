@@ -32,24 +32,39 @@ Yo como Sistema Financiero (Módulo 3) necesito calcular el monto a pagar al tra
 	- **When:** Cuando se desea generar la liquidación del transportista
 	- **Then:** El sistema calcula la tarifa según el pedido, aplica el 0% de pago por la taza de efetividad, y genera una liquidación, y registra el costo del flete como una pérdida operativa.
 
-### User Story 2 -  (Priority: P2)
+### User Story 2 - Validación de datos cruzados entre módulos (Priority: P1)
 
------------------
+Yo como Sistema Financiero necesito validar que existan los datos de entrada requeridos, valor del pedido y tasa de efectividad antes de intentar procesar el cálculo. Para evitar registros contables erróneos.
 
-**Why this priority:** 
+**Why this priority:** Protege la integridad de la base de datos y garantiza que el módulo financiero no falle por culpa de datos incompletos de los módulos de Logistica o de Gestión de Inventario.
 
-**Independent Test:** Asignar "Cartera Comercial" 
+**Independent Test:** Forzar el cálculo de una liquidación para un pedido que no tiene registrado su valor comercial en el sistema de inventario o un reporte del modulo de losgitica donde envien una taza de efectividad nula o por fuera de los parametros.
 
 **Acceptance Scenarios:**
-1. **Scenario:** 
-	- **Given:** 
-	- **When:** 
-	- **Then:** 
+
+1. **Scenario:** Intento de liquidación con datos incompletos
+	- **Given:** Tasa de efectividad registrada de un pedido, no se encuentra el valor del pedido registrado por el Módulo de Gestión de Inventario.
+	- **When:** Cuando se desea generar la liquidación del transportista.
+	- **Then:** El sistema bloquea la operación, no genera la liquidación y muestra un error de "Falta valor comercial del pedido".
+
+2. **Scenario:** Intento de liquidación con datos incompletos
+	- **Given:** Valor del pedido registrado, no se encuentra la Tasa de efectividad registrada por el Módulo de Logística.
+	- **When:** Cuando se desea generar la liquidación del transportista.
+	- **Then:** El sistema bloquea la operación, no genera la liquidación y muestra un error de "Falta taza de efectividad del pedido".
 
 ### Edge Cases
 
-- What happens when ?
-- How does system handle ?
+- ¿Qué pasa si un pedido es reportado como "Devolución (Error Empresa)"?
+- El sistema calcula el 10% del pedido como tarifa base, pero al aplicar el 0% de la matriz, la liquidación a pagar al transportista es de $0, y se debe generar un reporte como perdida operativa.
+
+- ¿Qué pasa si el cálculo del 10% del pedido arroja decimales muy largos?
+- El sistema debe redondear al valor entero más cercano para evitar problemas.
+  
+- ¿Qué pasa si la tasa de efectividad recibida desde el Módulo de Logística está fuera del rango 0-100%?
+- El sistema debe rechazar el valor, bloquear el cálculo y emitir una alerta de "Dato de efectividad inválido".
+
+- ¿Qué pasa si un pedido cambia de estado después de haber sido liquidado (ej. el cliente hace un reclamo posterior a la entrega)?
+- El sistema no debe modificar ni sobrescribir la liquidación original, ya que esto rompería la auditoría contable, en su lugar, el sistema debe requerir o permitir la generación de un nuevo registro tipo "Nota de Ajuste" o "Corrección Financiera" vinculada al mismo ID de pedido.
 
 ## Requirements (mandatory)
 
