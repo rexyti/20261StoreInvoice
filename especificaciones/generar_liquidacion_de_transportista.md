@@ -15,22 +15,22 @@ Yo como Sistema Financiero (Módulo 3) necesito calcular el monto a pagar al tra
 1. Scenario: Liquidación por Estado de Entrega Exitosa (100% de la tarifa)
 	- **Given:** El Módulo de Gestión de Inventario ha registrado un pedido con un valor, el Módulo de Logística ha registrado un estado de "Entregado Completo" para ese pedido.
 	- **When:** Cuando se desea generar la liquidación del transportista
-	- **Then:** El sistema calcula la tarifa según el pedido, aplica el 100% de pago por la taza de efetividad, y genera una liquidación a pagar.
+	- **Then:** El sistema calcula la tarifa según el pedido, aplica el 100% de pago por la tasa de efetividad, y genera una liquidación a pagar.
 
 2. Scenario: Liquidación con Rechazo Parcial (80% de la tarifa)
 	- **Given**: El Módulo de Gestión de Inventario ha registrado un pedido con un valor, el Módulo de Logística ha registrado un estado de "Rechazo parcial" para ese pedido.
 	- **When:** Cuando se desea generar la liquidación del transportista
-	- **Then:** El sistema calcula la tarifa según el pedido, aplica el 80% de pago por la taza de efetividad, y genera una liquidación a pagar.
+	- **Then:** El sistema calcula la tarifa según el pedido, aplica el 80% de pago por la tasa de efetividad, y genera una liquidación a pagar.
 
 3. Scenario: Penalización por Faltante de Inventario (Pérdida)
 	- **Given**: El Módulo de Gestión de Inventario ha registrado un pedido con un valor, el Módulo de Logística ha registrado un estado de "Faltante de Inventario" para ese pedido.
 	- **When:** Cuando se desea generar la liquidación del transportista
-	- **Then:** El sistema calcula la tarifa según el pedido, aplica el -100% de pago por la taza de efetividad, y genera una liquidación en contra del transportista.
+	- **Then:** El sistema calcula la tarifa según el pedido, aplica el -100% de pago por la tasa de efetividad, y genera una liquidación en contra del transportista.
 
-4. Scenario: Penalización por Faltante de Inventario (Pérdida)
+4. Scenario: Liquidación nula por Devolución (Error Empresa)
 	- **Given**: El Módulo de Gestión de Inventario ha registrado un pedido con un valor, el Módulo de Logística ha registrado un estado de "Faltante de Inventario" para ese pedido.
 	- **When:** Cuando se desea generar la liquidación del transportista
-	- **Then:** El sistema calcula la tarifa según el pedido, aplica el 0% de pago por la taza de efetividad, y genera una liquidación, y registra el costo del flete como una pérdida operativa.
+	- **Then:** El sistema calcula la tarifa según el pedido, aplica el 0% de pago por la tsa de efetividad, y genera una liquidación, y registra el costo del flete como una pérdida operativa.
 
 ### User Story 2 - Validación de datos cruzados entre módulos (Priority: P1)
 
@@ -38,7 +38,7 @@ Yo como Sistema Financiero necesito validar que existan los datos de entrada req
 
 **Why this priority:** Protege la integridad de la base de datos y garantiza que el módulo financiero no falle por culpa de datos incompletos de los módulos de Logistica o de Gestión de Inventario.
 
-**Independent Test:** Forzar el cálculo de una liquidación para un pedido que no tiene registrado su valor comercial en el sistema de inventario o un reporte del modulo de losgitica donde envien una taza de efectividad nula o por fuera de los parametros.
+**Independent Test:** Forzar el cálculo de una liquidación para un pedido que no tiene registrado su valor comercial en el sistema de inventario o un reporte del modulo de losgitica donde envien una tasa de efectividad nula o por fuera de los parametros.
 
 **Acceptance Scenarios:**
 
@@ -50,7 +50,7 @@ Yo como Sistema Financiero necesito validar que existan los datos de entrada req
 2. **Scenario:** Intento de liquidación con datos incompletos
 	- **Given:** Valor del pedido registrado, no se encuentra la Tasa de efectividad registrada por el Módulo de Logística.
 	- **When:** Cuando se desea generar la liquidación del transportista.
-	- **Then:** El sistema bloquea la operación, no genera la liquidación y muestra un error de "Falta taza de efectividad del pedido".
+	- **Then:** El sistema bloquea la operación, no genera la liquidación y muestra un error de "Falta tasa de efectividad del pedido".
 
 ### Edge Cases
 
@@ -66,17 +66,32 @@ Yo como Sistema Financiero necesito validar que existan los datos de entrada req
 - ¿Qué pasa si un pedido cambia de estado después de haber sido liquidado (ej. el cliente hace un reclamo posterior a la entrega)?
 - El sistema no debe modificar ni sobrescribir la liquidación original, ya que esto rompería la auditoría contable, en su lugar, el sistema debe requerir o permitir la generación de un nuevo registro tipo "Nota de Ajuste" o "Corrección Financiera" vinculada al mismo ID de pedido.
 
-## Requirements (mandatory)
+## Requirements *(mandatory)*
+
+<!--
+  ACTION REQUIRED: The content in this section represents placeholders.
+  Fill them out with the right functional requirements.
+-->
 
 ### Functional Requirements
 
-- **FR-001**: El sistema MUST obtener el valor total del pedido ingresado por el Módulo de Gestión de Inventario.
+- **FR-001**: El sistema MUST consultar un endpoint (petición GET) expuesto por el Módulo de Gestión de Inventario, utilizando el id_pedido como parámetro de búsqueda, para obtener el precio total del pedido antes de generar la liquidación.
 - **FR-002**: El sistema MUST obtener el estado de entrega "Tasa de efectividad de la distribución del pedido" del Módulo de Logística.
 - **FR-003**: El sistema MUST calcular la "tarifa base" del transportista extrayendo exactamente el 10% del valor total del pedido.
 - **FR-004**: El sistema MUST aplicar a la tarifa base los porcentajes establecidos en la Matriz de Liquidación Logística (100% Entregado, 80% Rechazo Parcial, 0% Devolución empresa, -100% Faltante).
 - **FR-005**: El sistema MUST bloquear y cancelar la generación de la liquidación si el valor comercial del pedido es nulo, cero, o si no hay un estado de entrega final reportado.
+
+### Key Entities *(include if feature involves data)*
+
+- **[Entity 1]**: [What it represents, key attributes without implementation]
+- **[Entity 2]**: [What it represents, relationships to other entities]
   
 ## Success Criteria (mandatory)
+
+<!--
+  ACTION REQUIRED: Define measurable success criteria.
+  These must be technology-agnostic and measurable.
+-->
 
 ### Measurable Outcomes
 
