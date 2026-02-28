@@ -1,5 +1,5 @@
 # Feature Specification - Ingresar forma de pago del cliente
-
+//Terminada
 **Created:** 24-02-2026
 ## User Scenarios & Testing (mandatory)
 
@@ -20,24 +20,10 @@ Yo como Asesor Comercial necesito registrar la forma de pago (Contra Entrega o C
 	- **When:** El asesor busca un ID Nacional y no existe en la base de datos
 	- **Then:** El sistema solicita ejecutar Registrar cliente antes de continuar
 
-### User Story 2 - Validación de cupo para Cartera Comercial (Priority: P2)
-
-Yo como Asesor Comercial necesito que el sistema valide si el cliente es apto para crédito cuando selecciono Cartera Comercial. Para mitigar el riesgo de impago.
-
-**Why this priority:** Protección financiera
-
-**Independent Test:** Asignar Cartera Comercial a un cliente con historial de morosidad y verificar que el sistema requiera autorización
-
-**Acceptance Scenarios:**
-1. **Scenario:** Aprobación de Cartera
-	- **Given:** Un cliente sin reportes negativos
-	- **When:** Se le asigna la forma de pago Cartera Comercial
-	- **Then:** El sistema aprueba el cambio e indica el límite de crédito predeterminado
-
 ### Edge Cases
 
-- What happens when [un cliente tiene bloqueada su Cartera Comercial pero necesita hacer un pedido urgente]?
-- How does system handle [error scenario]?
+- El asesor ingresa caracteres no numéricos o espacios en blanco en el campo de búsqueda de ID Nacional?
+- El sistema debe sanitizar la entrada y mostrar un mensaje de error amigable en lugar de fallar
 
 ## Requirements (mandatory)
 

@@ -4,20 +4,7 @@
 
 ## User Scenarios & Testing *(mandatory)*
 
-<!--
-  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
-  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
-  you should still have a viable MVP (Minimum Viable Product) that delivers value.
-  
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
--->
-
-### User Story 1 - [] (Priority: P1)
+### User Story 1 - Consultar liquidaciones (Priority: P1)
 
 Yo como contador necesito revisar todas las liquidaciones en la base de datos. Para fines legales.
 
@@ -32,10 +19,9 @@ Yo como contador necesito revisar todas las liquidaciones en la base de datos. P
    - **When**: Cuando las necesite para contabilizacion
    - **Then**: Se muestra los datos de las liquidaciones
 
-   
 ---
 
-### User Story 2 - Consulta de liquidaciones (Priority: P2)
+### User Story 2 - Consulta de liquidaciones de cliente especifico (Priority: P2)
 
 Yo como contador quiero consultar liquidaciones de un Cliente en especifico (se usa ID nacional). Para consultar información especifica con
 fines legales
@@ -69,8 +55,8 @@ Como contador quiero consultar liquidaciones en un rango determinado de fechas c
 
 ### Edge Cases
 
-- What happens when []?
-- How does system handle []?
+- What happens when [El usuario ingresa un ID nacional de un cliente que no existe]?
+- How does system handle [El sistema muestra mensaje de error y recomienda registrar al nuevo cliente en una ventana modal]?
 
 ## Requirements *(mandatory)*
 
@@ -81,6 +67,8 @@ Como contador quiero consultar liquidaciones en un rango determinado de fechas c
 - **FR-003**: System MUST [Listar todas las liquidaciones en un rango de fechas ingresado por el contador]
 - **FR-004**: System MUST [Permitir buscar las liquidaciones de un usuario en especifico con su ID nacional en un rango de fechas]
 - **FR-005**: System MUST [Permitir descargar las liquidaciones]
+- **FR-006**: System MUST [El sistema debe mostrar todas las liquidaciones en orden cronológico descendente, 20 por página]
+
 
 ### Key Entities *(include if feature involves data)*
 
@@ -94,8 +82,6 @@ Como contador quiero consultar liquidaciones en un rango determinado de fechas c
 
 ### Measurable Outcomes
 
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **SC-001**: Al consultar liquidaciones entre dos fechas el sistema debe mostrar el 100% de las liquidaciones existentes desde las 00:00 de la fecha inicial hasta las 23:59 de la fecha final.
+- **SC-002**: El sistema debe demorar maximo 2 segundos en mostrar los resultados de busqueda.
 

@@ -30,12 +30,12 @@
 ---
 
 ### Edge Cases
-
 * **Registro Duplicado Internacional**: ¿Qué pasa si se intenta registrar un ID Nacional que ya existe en el mismo País?
   → El sistema debe bloquear el registro, ya que la combinación {Pais_Origen + ID_Nacional} debe ser única. Debe mostrar: "Este documento ya está registrado para el país seleccionado".
 * **Campos Vacíos**: El sistema debe impedir el guardado si faltan campos obligatorios, resaltando el error en la interfaz.
 * **ID Nacional con Formato Internacional**: El sistema debe permitir caracteres alfanuméricos en el ID Nacional para soportar pasaportes o identificaciones de otros países.
 * **Búsqueda Fallida**: Si se busca un cliente que no existe, el sistema debe ofrecer la opción de "Registrar nuevo cliente" inmediatamente.
+
 
 ---
 
