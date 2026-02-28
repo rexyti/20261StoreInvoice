@@ -1,7 +1,8 @@
 # Feature Specification: [Ingresar tasa de efectividad de la distribucion del pedido]
 
 **Created**: 21-02-2026  
-//Incompleta
+
+
 ## User Scenarios & Testing *(mandatory)*
 
 <!--
@@ -34,23 +35,6 @@ Yo como desarrollador necesito que la tasa de efectividad de la distribucion del
 
 
 ---
-
-### User Story 2 -  (Priority: P2)
-
-Yo como contador dueño del software quiero que me calcule la liquidacion del transportista automaticamente al ingresar la tasa de efectividad
-
-**Why this priority**: Porque con esta generamos la liquidacion del contratista.
-
-**Independent Test**: verificar con el contador que la liquidacion sea correcta y coherente con el pedido
-
-**Acceptance Scenarios**: Que genere una liquidacion correcta y mostrando con transparencia la informacion.
-
-
-
-1. **Scenario**: La tasa de efectividad fue registrada
-   - **Given**: El transportista entrega el pedido
-   - **When**: El pedido este en una etapa: "devuelto, cancelado o entregado"
-   - **Then**: El sistema calcula el monto correspondiente al transportista
 
 
 ---
@@ -136,7 +120,7 @@ SC-002: El sistema debe generar una liquidación en menos de 3 segundos después
 
 SC-003: Al menos el 95% de las consultas por ID nacional deben devolver resultados correctos en el primer intento.
 
-SC-004: Reducir errores manuales en el cálculo de pago al transportista en un 80% respecto al proceso anterior manual.
+SC-004: Reducir errores manuales en el cálculo de pago al transportista en un 85% respecto al proceso anterior manual.
 
 SC-005: El sistema debe procesar al menos 500 liquidaciones diarias sin fallos críticos.
 
