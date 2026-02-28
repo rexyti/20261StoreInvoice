@@ -42,7 +42,7 @@
 ## Requirements
 
 ### Functional Requirements
-* **FR-001**: El sistema **MUST** generar automáticamente un ID único (UUID o secuencial) para cada cliente, el cual funcionará como Clave Primaria interna.
+* **FR-001**: El sistema **MUST** generar automáticamente un ID único secuencial para cada cliente, el cual funcionará como Clave Primaria interna.
 * **FR-002**: El sistema **MUST** validar que la combinación de "País + ID Nacional" sea única para evitar duplicidades en un contexto internacional.
 * **FR-003**: El sistema **MUST** obligar el llenado de los campos: ID Nacional, Nombre, Apellido y Teléfono.
 * **FR-004**: El sistema **MUST** permitir la edición de la información del cliente, incluyendo el ID Nacional (en caso de error de digitación), siempre que no colisione con otro registro existente.
