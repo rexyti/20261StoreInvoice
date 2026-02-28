@@ -23,7 +23,7 @@ Yo como Asesor Comercial necesito registrar la forma de pago (Contra Entrega o C
 ### Edge Cases
 
 - El asesor ingresa caracteres no numéricos o espacios en blanco en el campo de búsqueda de ID Nacional?
-- El sistema debe sanitizar la entrada y mostrar un mensaje de error amigable en lugar de fallar
+- El sistema debe mostrar un mensaje de error en lugar de fallar.
 
 ## Requirements (mandatory)
 
@@ -31,7 +31,6 @@ Yo como Asesor Comercial necesito registrar la forma de pago (Contra Entrega o C
 
 - **FR-001**: System MUST permitir la selección entre al menos dos formas de pago: Pago Contra Entrega y Cartera Comercial.
 - **FR-002:** System MUST requerir que el cliente exista en la base de datos antes de guardar la forma de pago.
-- **FR-003:** System MUST guardar un historial de auditoría indicando qué asesor comercial modificó la forma de pago y en qué fecha.
 
 ## Success Criteria (mandatory)
 
