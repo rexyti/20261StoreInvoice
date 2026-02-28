@@ -1,114 +1,70 @@
 # Feature Specification: [Registrar cliente]
-
 **Created**: 21-02-2026  
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing
 
-<!--
-  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
-  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
-  you should still have a viable MVP (Minimum Viable Product) that delivers value.
-  
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
--->
+### User Story 1 - Registro de Nuevo Cliente (Priority: P1)
+**Yo como** asesor comercial **debo** registrar clientes en el sistema, **con el objetivo de** vincularlos posteriormente a facturas y procesos de liquidación.
 
-### User Story 1 - [] (Priority: P1)
+* **Why this priority**: Es la entidad base para la facturación y trazabilidad legal.
+* **Independent Test**: Intentar guardar un cliente con todos los campos obligatorios y verificar que se genere un registro único en la base de datos.
+* **Acceptance Scenarios**:
+    1.  **Scenario: Registro exitoso**
+        * **Given**: Un ID Nacional que no existe previamente para ese tipo de documento.
+        * **When**: El asesor completa ID Nacional, Nombre, Apellido, Dirección y Teléfono y presiona "Guardar".
+        * **Then**: El sistema genera un ID interno único, confirma el registro y los datos persisten en la BD.
+    2.  **Scenario: ID Nacional Duplicado**
+        * **Given**: Un cliente ya registrado con el ID Nacional "12345".
+        * **When**: Se intenta registrar un nuevo cliente con el mismo ID Nacional "12345".
+        * **Then**: El sistema bloquea la acción y muestra el mensaje: "Error: El número de identificación ya se encuentra registrado".
 
-Yo como asesor comercial debo registrar clientes, con el objetivo de luego consultarlos en facturas.
+### User Story 2 - Modificación de datos (Priority: P2)
+**Yo como** asesor comercial **quiero** actualizar la información de un cliente existente **para** mantener la base de datos al día.
 
-Debo registrar lo siguiente: ID Nacional, nombre, apellido, direccion, numero telefono
-
-**Why this priority**: Es importante porque otras acciones dependen de esta, tambien para temas de trazabilidad
-
-**Independent Test**: Realizar el registro y verificar en la base de datos que se registró
-
-**Acceptance Scenarios**:
-
-1. **Scenario**: Registro exitoso
-   - **Given**: Cliente no registrado en el sistema
-   - **When**: Cuando se quiera agregar un cliente
-   - **Then**: Accione exitosa -> cliente en BD
-
-
-2. **Scenario**: Cliente ya registrado
-   - **Given** Existe un cliente registrado
-   - **When**: Cuando se registra el cliente con el mismo ID nacional que un cliente registrado
-   - **Then**: Evitar que se registre y notificar que ya esta registrado
-   
-   
-3. **Scenario**: 
-   - **Given** 
-   - **When**: 
-   - **Then**: 
+* **Acceptance Scenario**:
+    1.  **Scenario: Actualización de datos de contacto**
+        * **Given**: Un cliente seleccionado de la lista (identificado por su ID interno).
+        * **When**: Se modifica el campo "Teléfono" o "Dirección" y se guarda.
+        * **Then**: El sistema actualiza los valores y mantiene la integridad del registro original.
 
 ---
-
-### User Story 2 - Modificacion de datos de cliente (Priority: P2)
-
-Yo como asesor comercial quiero modificar los datos de un cliente
-
-**Why this priority**: Para manejar datos actualizados
-
-**Independent Test**: Realizar un cambio y verificar en BD si se realizó
-
-**Acceptance Scenarios**:
-
-1. **Scenario**: Cambio de datos
-   - **Given**: Dato de cambio
-   - **When**: Cuando se requiera la modificacion
-   - **Then**: Modificacion exitosa -> cambio en BD
-
-
----
-
-[Add more user stories as needed, each with an assigned priority]
 
 ### Edge Cases
 
-- What happens when [Registrar un clinete ya registrado, se identifica por numero de identificacion nacional]?
-- How does system handle [Evitar el registro y informar que ya esta registrado]?
+* **Registro Duplicado Internacional**: ¿Qué pasa si se intenta registrar un ID Nacional que ya existe en el mismo País?
+  → El sistema debe bloquear el registro, ya que la combinación {Pais_Origen + ID_Nacional} debe ser única. Debe mostrar: "Este documento ya está registrado para el país seleccionado".
+* **Campos Vacíos**: El sistema debe impedir el guardado si faltan campos obligatorios, resaltando el error en la interfaz.
+* **ID Nacional con Formato Internacional**: El sistema debe permitir caracteres alfanuméricos en el ID Nacional para soportar pasaportes o identificaciones de otros países.
+* **Búsqueda Fallida**: Si se busca un cliente que no existe, el sistema debe ofrecer la opción de "Registrar nuevo cliente" inmediatamente.
 
-## Requirements *(mandatory)*
+---
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right functional requirements.
--->
+## Requirements
 
 ### Functional Requirements
+* **FR-001**: El sistema **MUST** generar automáticamente un ID único (UUID o secuencial) para cada cliente, el cual funcionará como Clave Primaria interna.
+* **FR-002**: El sistema **MUST** validar que la combinación de "País + ID Nacional" sea única para evitar duplicidades en un contexto internacional.
+* **FR-003**: El sistema **MUST** obligar el llenado de los campos: ID Nacional, Nombre, Apellido y Teléfono.
+* **FR-004**: El sistema **MUST** permitir la edición de la información del cliente, incluyendo el ID Nacional (en caso de error de digitación), siempre que no colisione con otro registro existente.
+* **FR-005**: El sistema **MUST** registrar un log de auditoría que guarde: Usuario que realizó la acción, Fecha/Hora y Tipo de operación (Creación/Edición).
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+### Key Entities
+* **[Cliente]**:
+    * `ID_Cliente` (PK - Artificial, Numérico o UUID)
+    * `ID_Nacional` (String - Atributo de identidad)
+    * `Pais_Origen`(String o ID si esta en otra tabla para relacion)
+    * `Nombre` (String)
+    * `Apellido` (String)
+    * `Dirección` (String)
+    * `Teléfono` (String)
+    * `Fecha_Registro` (Timestamp)
 
-*Example of marking unclear requirements:*
+---
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
-
-### Key Entities *(include if feature involves data)*
-
-- **[Cliente]**: Representa un cliente de la empresa. Atributos: ID Nacional, nombre, apellido, direccion, numero telefono
-- **[Entity 2]**: [What it represents, relationships to other entities]
-
-## Success Criteria *(mandatory)*
-
-<!--
-  ACTION REQUIRED: Define measurable success criteria.
-  These must be technology-agnostic and measurable.
--->
+## Success Criteria
 
 ### Measurable Outcomes
-
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
-
+* **SC-001**: El tiempo de registro de un cliente (desde el clic en guardar hasta la confirmación) debe ser menor a **2 segundos**.
+* **SC-002**: El sistema debe soportar identificaciones de hasta 20 caracteres alfanuméricos para cubrir estándares internacionales.
+* **SC-003**: El 100% de las modificaciones deben quedar registradas en la tabla de auditoría para fines legales.
+* **SC-004**: La interfaz de registro debe cargar en menos de **1 segundo** tras la petición del asesor comercial.
