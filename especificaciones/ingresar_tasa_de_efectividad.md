@@ -1,7 +1,7 @@
 # Feature Specification: [Ingresar tasa de efectividad de la distribucion del pedido]
 
 **Created**: 21-02-2026  
-
+//Incompleta
 ## User Scenarios & Testing *(mandatory)*
 
 <!--
@@ -74,6 +74,8 @@ fines legales
 
 - ¿Qué pasa si un pedido cambia de estado después de liquidado?
   → Debe generarse ajuste o nota de corrección.
+- ¿Qué pasa si se envían datos incompletos del modulo 2?
+  → El sistema debe devolver un error 422.
 
 
 ## Requirements *(mandatory)*
@@ -91,9 +93,7 @@ fines legales
 - **FR-002**: El sistema MUST almacenar la tasa de efectividad asociada al pedido.
 - **FR-003**: El sistema MUST validar que la tasa esté entre 0% y 100%.
 - **FR-004**: El sistema MUST calcular automáticamente el monto a pagar al transportista.
-- **FR-005**: El sistema MUST permitir consultar liquidaciones por ID nacional.
 - **FR-006**: El sistema MUST generar historial de liquidaciones por transportista.
-- **FR-007**: El sistema MUST bloquear liquidaciones si faltan datos del módulo 2.
 
 *Example of marking unclear requirements:*
 
