@@ -17,9 +17,10 @@
   - Demonstrated to users independently
 -->
 
+
 ### User Story 1 - [] (Priority: P1)
 
-Yo como cliente deseo consultar mis liquidaciones personales en una lista. Para tener informacion de mis pagos
+Yo como cliente deseo consultar mis liquidaciones personales en una lista paginada. Para tener informacion de mis pagos
 
 **Why this priority**: Transparencia de informacion
 
@@ -29,41 +30,18 @@ Yo como cliente deseo consultar mis liquidaciones personales en una lista. Para 
 
 1. **Scenario**: Consulta exitosa
    - **Given**: Usuario registado; Tener liquidaciones generadas; 
-   - **When**: Cuando cliqué una liquidacion listada en su perfil personal
-   - **Then**: Se muestra los datos de la liquidacion
+   - **When**: Cuando acceda a "Mis liquidaciones"
+   - **Then**: Se muestra los datos de la liquidacion en una lista paginada, donde cada pagina puede almacenar 20 registros ordenada de manera cronologica descendente
 
    
 ---
 
-### User Story 2 - Consulta de liquidaciones (Priority: P2)
 
-Yo como cliente quiero revisar mi lista de liquidaciones. Para ver mis datos
-
-**Why this priority**: Transparencia de informacion
-
-**Independent Test**: Revisar que la lista tenga todas las liquidaciones de la BD
-
-**Acceptance Scenarios**:
-
-1. **Scenario**: Cambio de datos
-   - **Given**: Dato de cambio
-   - **When**: Cuando se requiera la modificacion
-   - **Then**: Modificacion exitosa -> cambio en BD
-
-
----
-
-[Add more user stories as needed, each with an assigned priority]
 
 ### Edge Cases
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right edge cases.
--->
-
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+- What happens when no haya liquidaciones asociadas a un usuario para listar?
+- How does system handle?: Mostrar un mensaje para notificar que no tiene liquidaciones asociadas
 
 ## Requirements *(mandatory)*
 
@@ -74,21 +52,14 @@ Yo como cliente quiero revisar mi lista de liquidaciones. Para ver mis datos
 
 ### Functional Requirements
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
-
-*Example of marking unclear requirements:*
-
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-001**: System MUST implementar la visualizacion de las liquidaciones asociadas a un usuario ordenada cronologicamente descendente. Registrando 20 registros por pagina
+- **FR-002**: System MUST Descargar las liquidaciones seleccionadas en formato pdf
+- **FR-003**: Users MUST be able to Permitir al usuario navegar entre las paginas de la lista paginada
 
 ### Key Entities *(include if feature involves data)*
 
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
+- **[Liquidacion]**: ID_Liquidacion, Precio, Accion financiera, Id_Cliente, Origen_ciudad, Destinacion_ciudad;
+- **[Productos del pedido]**: ID_producto,  Precio_unitario, Cantidad_productos, M -> 1 [Liquidacion] as ID_producto
 
 ## Success Criteria *(mandatory)*
 
@@ -99,8 +70,8 @@ Yo como cliente quiero revisar mi lista de liquidaciones. Para ver mis datos
 
 ### Measurable Outcomes
 
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **SC-001**: El sistema debe listar el 100% de las liquidaciones asociadas a un usuario 
+- **SC-002**: El tiempo de respuesta al consultar "Mis liquidaciones" debe ser menor a 3 segundos
+- **SC-003**: El 90% de los usuarios debe poder descargar su ultima liquidacion en menos de 3 clics
+- **SC-004**: El pdf descargado debe contener los mismos datos que los mostrados en la interfaz web
 

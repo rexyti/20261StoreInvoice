@@ -23,9 +23,9 @@ Yo como desarrollador necesito que la tasa de efectividad de la distribucion del
 
 **Why this priority**: Porque permite finalizar el flujo de ejecucion.
 
-**Independent Test**: Que reciba todas las tasas de efectividad de manera correcta y las guarde en la base de datos.
+**Independent Test**: Verificar que reciba todas las tasas de efectividad de manera correcta y las guarde en la base de datos.
 
-**Acceptance Scenarios**:
+**Acceptance Scenarios**: En el sistema quede guardada la tasa de efectividad correspondiente al pedido
 
 1. **Scenario**: Etapa logistica finalizada
    - **Given**: El pedido tenga uno de los siguientes estados: cancelado, entregado o daño parcial 
@@ -33,28 +33,24 @@ Yo como desarrollador necesito que la tasa de efectividad de la distribucion del
    - **Then**: El transportista entrega la tasa de efectividad de la distribucion del pedido y esta sea recibida y guardada en la base de datos
 
 
-2. **Scenario**: 
-   - **Given**: 
-   - **When**: 
-   - **Then**: 
-   
 ---
 
 ### User Story 2 -  (Priority: P2)
 
-Yo como contador quiero consultar liquidaciones de un usuario en especifico (se usa ID nacional). Para consultar informacion especifica con
-fines legales
+Yo como contador dueño del software quiero que me calcule la liquidacion del transportista automaticamente al ingresar la tasa de efectividad
 
-**Why this priority**: 
+**Why this priority**: Porque con esta generamos la liquidacion del contratista.
 
-**Independent Test**: 
+**Independent Test**: verificar con el contador que la liquidacion sea correcta y coherente con el pedido
 
-**Acceptance Scenarios**:
+**Acceptance Scenarios**: Que genere una liquidacion correcta y mostrando con transparencia la informacion.
 
-1. **Scenario**: 
-   - **Given**: 
-   - **When**: 
-   - **Then**: 
+
+
+1. **Scenario**: La tasa de efectividad fue registrada
+   - **Given**: El transportista entrega el pedido
+   - **When**: El pedido este en una etapa: "devuelto, cancelado o entregado"
+   - **Then**: El sistema calcula el monto correspondiente al transportista
 
 
 ---
@@ -97,8 +93,17 @@ fines legales
 
 *Example of marking unclear requirements:*
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+FR-08: El sistema MUST autenticar a los usuarios antes de permitir la consulta de liquidaciones.
+[NEEDS CLARIFICATION: método de autenticación no definido – ¿usuario/contraseña institucional?, ¿JWT entre módulos?, ¿SSO empresarial?]
+
+FR-09: El sistema MUST conservar el historial de liquidaciones generadas.
+[NEEDS CLARIFICATION: no se ha definido el tiempo de retención legal de los registros.]
+
+FR-10: El sistema MUST aplicar penalizaciones según la tasa de efectividad.
+[NEEDS CLARIFICATION: no se ha definido la fórmula exacta de penalización.]
+
+FR-11: El sistema MUST recibir información del módulo de Logística mediante integración automática.
+[NEEDS CLARIFICATION: no se ha definido si será REST API, mensajería asíncrona o carga manual.]
 
 ### Key Entities *(include if feature involves data)*
 
@@ -125,10 +130,13 @@ fines legales
   These must be technology-agnostic and measurable.
 -->
 
-### Measurable Outcomes
+SC-001: El 100% de las tasas de efectividad recibidas del módulo de Logística deben almacenarse correctamente en la base de datos sin pérdida de información.
 
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+SC-002: El sistema debe generar una liquidación en menos de 3 segundos después de recibir la tasa de efectividad.
+
+SC-003: Al menos el 95% de las consultas por ID nacional deben devolver resultados correctos en el primer intento.
+
+SC-004: Reducir errores manuales en el cálculo de pago al transportista en un 80% respecto al proceso anterior manual.
+
+SC-005: El sistema debe procesar al menos 500 liquidaciones diarias sin fallos críticos.
 
