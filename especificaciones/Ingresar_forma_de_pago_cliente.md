@@ -12,12 +12,12 @@ Yo como Asesor Comercial necesito registrar la forma de pago (Contra Entrega o C
 
 **Acceptance Scenarios:**
 1. Scenario: Asignación exitosa a cliente existente
-	- **Given:** Un cliente previamente registrado en el sistema
+	- **Given:** Un cliente previamente registrado en el sistema (primero se consulta su ID de BD usando consultar_cliente con el ID Nacional)
 	- **When:** El asesor selecciona la opción Pago Contra Entrega y guarda los cambios
 	- **Then:** El perfil del cliente se actualiza con la nueva forma de pago
 2. Scenario: Cliente no registrado
 	- **Given**: Un intento de asignar forma de pago
-	- **When:** El asesor busca un ID Nacional y no existe en la base de datos
+	- **When:** El asesor busca un ID Nacional y no existe en la base de datos (al consultar con consultar_cliente)
 	- **Then:** El sistema solicita ejecutar Registrar cliente antes de continuar
 
 ### Edge Cases
@@ -25,12 +25,17 @@ Yo como Asesor Comercial necesito registrar la forma de pago (Contra Entrega o C
 - El asesor ingresa caracteres no numéricos o espacios en blanco en el campo de búsqueda de ID Nacional?
 - El sistema debe mostrar un mensaje de error en lugar de fallar.
 
+- El cliente no existe al consultar con ID Nacional?
+- El sistema debe mostrar error y solicitar registrar al cliente primero (usar el endpoint consultar_cliente para validar).
+
 ## Requirements (mandatory)
 
 ### Functional Requirements
 
 - **FR-001**: System MUST permitir la selección entre al menos dos formas de pago: Pago Contra Entrega y Cartera Comercial.
 - **FR-002:** System MUST requerir que el cliente exista en la base de datos antes de guardar la forma de pago.
+- **FR-003:** System MUST primero consultar el ID de BD del cliente usando el endpoint consultar_cliente con el ID Nacional antes de guardar la forma de pago.
+- **FR-004:** System MUST guardar la forma de pago asociada al ID de BD del cliente.
 
 ## Success Criteria (mandatory)
 
